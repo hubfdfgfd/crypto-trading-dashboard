@@ -1,0 +1,69 @@
+=================================================================
+  FIX: INSTALACIJA NODE.JS
+=================================================================
+
+PROBLEM: 'npm' is not recognized
+
+REŠENJE: Instaliraj Node.js
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KORAK 1: Download Node.js
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Otvori browser i idi na:
+   https://nodejs.org
+
+2. Download "LTS" verziju (preporučena verzija)
+   - Klikni zeleno dugme "Download Node.js (LTS)"
+   - Fajl: node-vXX.X.X-x64.msi (~30-50 MB)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KORAK 2: Instaliraj Node.js
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Dupli klik na downloaded .msi fajl
+2. Klikni "Next" → "Next" → "Next"
+3. Obavezno štikliraj:
+   ✓ "Automatically install necessary tools"
+4. Klikni "Install"
+5. Čekaj instalaciju (~2-3 minuta)
+6. Klikni "Finish"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KORAK 3: Proveri Instalaciju
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. ZATVORI trenutni CMD/PowerShell terminal
+2. Otvori NOVI terminal
+3. Ukucaj:
+
+   node --version
+
+   Trebao bi dobiti: v20.x.x (ili slično)
+
+4. Ukucaj:
+
+   npm --version
+
+   Trebao bi dobiti: 10.x.x (ili slično)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KORAK 4: Nastavi sa Build-om
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Nakon instalacije Node.js:
+
+1. cd "f:\Ollama\CURSOR\NOVO\play_store_app"
+2. .\INSTALL.bat
+
+Sada bi trebalo raditi!
+
+=================================================================
+
+JAVI MI KADA INSTALIRAŠ NODE.JS!
+
+=================================================================

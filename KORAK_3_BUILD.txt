@@ -1,0 +1,74 @@
+=================================================================
+  ✅ KORAK 2 ZAVRŠEN - AdMob ID-evi konfigurisani!
+=================================================================
+
+AdMob ID-evi su sada ugrađeni u aplikaciju:
+✓ Banner Ad:       ca-app-pub-6221937757841885/8073125509
+✓ Interstitial Ad: ca-app-pub-6221937757841885/4238558368  
+✓ App ID:          ca-app-pub-6221937757841885~7738819676
+
+=================================================================
+  KORAK 3 - BUILD APK (TEST VERZIJA)
+=================================================================
+
+Sada idemo da napravimo TEST APK da vidimo kako izgleda na telefonu!
+
+1. INSTALIRAJ DEPENDENCIES (samo prvi put):
+   ──────────────────────────────────────────
+   
+   DUPLI KLIK NA: INSTALL.bat
+   
+   ILI ručno u terminalu:
+   
+   cd "f:\Ollama\CURSOR\NOVO\play_store_app"
+   npm install -g eas-cli expo-cli
+   npm install
+
+   
+2. BUILD TEST APK:
+   ─────────────────
+   
+   DUPLI KLIK NA: BUILD_APK.bat
+   
+   ILI ručno u terminalu:
+   
+   eas login
+   (kreiraj Expo nalog ako nemaš)
+   
+   eas build --platform android --profile preview
+
+   
+3. ČEKAJ 15-20 MINUTA:
+   ──────────────────────
+   Build se izvršava u CLOUD-U (ne treba ti Android Studio!)
+   
+   
+4. DOWNLOAD APK:
+   ──────────────
+   Terminal će ispisati link za download APK fajla.
+   Otvori link u browseru → Download APK
+   
+   
+5. INSTALIRAJ NA TELEFON:
+   ────────────────────────
+   - Prebaci APK na telefon (email, USB, cloud)
+   - Na telefonu: Settings → Security → "Unknown sources" (Enable)
+   - Tap na APK → Install
+   
+   
+6. TESTIRAJ:
+   ──────────
+   ✓ App se otvara?
+   ✓ Podaci se učitavaju? (ili dummy podaci prikazani)
+   ✓ Charts se prikazuju?
+   ✓ Refresh radi?
+   ✓ Banner AD se vidi na dnu?
+   ✓ Premium dugme radi?
+
+=================================================================
+
+JAVI MI KADA POKRENEŠ INSTALL.bat!
+
+Zatim ćemo pokrenuti BUILD_APK.bat za pravi build!
+
+=================================================================

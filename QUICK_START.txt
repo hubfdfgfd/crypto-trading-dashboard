@@ -1,0 +1,115 @@
+==============================================================
+  📱 PLAY STORE APP - BRZI VODIČ
+==============================================================
+
+🎯 ŠTA JE OVO?
+
+Android aplikacija za Google Play Store sa:
+✅ AdMob oglasima (zarada)
+✅ Premium verzijom $4.99 (zarada)
+✅ Cloud build (bez Android Studio!)
+
+==============================================================
+  💰 KOLIKO MOŽEŠ ZARADITI?
+==============================================================
+
+Sa 1,000 korisnika mesečno:
+- Oglasi: $50-150/mesec
+- Premium (5% conversion): $175 jednokratno
+- UKUPNO: $225-375 prvi mesec
+
+Sa 10,000 korisnika mesečno:
+- Oglasi: $500-1,500/mesec
+- Premium: $1,750 jednokratno
+- UKUPNO: $2,250-3,250 prvi mesec
+
+==============================================================
+  🚀 3 KORAKA DO OBJAVE
+==============================================================
+
+KORAK 1: Registracije (30 min)
+------------------------------
+1. Google Play Developer nalog → $25
+   https://play.google.com/console
+
+2. Google AdMob nalog → BESPLATNO
+   https://admob.google.com
+   - Kreiraj "Banner Ad" → kopiraj ID
+   - Kreiraj "Interstitial Ad" → kopiraj ID
+   - Zameni u App.js (red 24-25)
+
+KORAK 2: Build APK (20 min)
+----------------------------
+1. Dupli klik: INSTALL.bat (samo jednom)
+2. Dupli klik: BUILD_APK.bat
+3. Sačekaj 15-20 min (build u cloud-u)
+4. Download APK i testiraj na telefonu
+
+KORAK 3: Upload na Play Store (1h)
+-----------------------------------
+1. Dupli klik: BUILD_AAB.bat
+2. Download AAB fajl
+3. Google Play Console → Create App
+4. Upload AAB
+5. Dodaj screenshots, description, icon
+6. Submit for review!
+
+==============================================================
+  📋 ŠTA TI TREBA
+==============================================================
+
+PRE BUILD-a:
+- [ ] Node.js instaliran
+- [ ] Expo nalog (kreiras tokom build-a)
+- [ ] AdMob nalog + Ad Unit IDs
+- [ ] Backend server IP adresa u App.js
+
+PRE PLAY STORE:
+- [ ] Google Play Developer nalog ($25)
+- [ ] Privacy Policy (hosted online)
+- [ ] 2-8 screenshots aplikacije
+- [ ] App icon 512x512 px
+- [ ] Store description
+
+==============================================================
+  🔧 KONFIGURACIJA
+==============================================================
+
+1. Backend URL (App.js, red 21):
+   API_URL: 'http://192.168.1.100:5000/indicators'
+   ↑ Zameni sa tvojom IP adresom
+
+2. AdMob IDs (App.js, red 24-25):
+   ADMOB_BANNER_ID: 'ca-app-pub-XXXX/YYYY'
+   ADMOB_INTERSTITIAL_ID: 'ca-app-pub-XXXX/ZZZZ'
+   ↑ Dobićeš iz AdMob console
+
+3. Package name (app.json, red 21):
+   "package": "com.yourcompany.cryptodashboard"
+   ↑ Zameni yourcompany sa tvojim imenom
+
+==============================================================
+  📞 DETALJNE INSTRUKCIJE
+==============================================================
+
+README.md → Quick start guide
+GOOGLE_PLAY_VODIC.md → Sve o Play Store procesu i zaradi
+
+==============================================================
+  ⚡ QUICK START
+==============================================================
+
+cd "f:\Ollama\CURSOR\NOVO\play_store_app"
+
+# Instalacija (jednom)
+INSTALL.bat
+
+# Test APK
+BUILD_APK.bat
+
+# Production AAB za Play Store
+BUILD_AAB.bat
+
+==============================================================
+
+SPREMNO ZA ZARADU! 💰🚀

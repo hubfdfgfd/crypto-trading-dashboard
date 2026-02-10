@@ -1,0 +1,51 @@
+=================================================================
+  KORAK 1 - GOOGLE ADMOB REGISTRACIJA
+=================================================================
+
+1. Otvori u browseru:
+   https://admob.google.com
+
+2. Klikni "GET STARTED" ili "SIGN IN"
+   - Koristi isti Google nalog kao Play Console
+
+3. Klikni "Apps" → "ADD APP"
+   
+4. Popuni:
+   ✓ Platform: ANDROID
+   ✓ App name: Crypto Trading Dashboard
+   ✓ Is your app listed on Google Play?: NO (jos nije)
+   ✓ Klikni "CONTINUE"
+
+5. Kreiraj BANNER AD UNIT:
+   ──────────────────────
+   - Klikni "Ad units" → "GET STARTED"
+   - Select format: BANNER
+   - Ad unit name: Dashboard Banner
+   - Klikni "CREATE AD UNIT"
+   
+   → KOPIRAJ "Ad unit ID" (izgleda: ca-app-pub-XXXX/YYYY)
+   
+6. Kreiraj INTERSTITIAL AD UNIT:
+   ────────────────────────────────
+   - Klikni "Ad units" → "ADD AD UNIT"
+   - Select format: INTERSTITIAL
+   - Ad unit name: Dashboard Interstitial
+   - Klikni "CREATE AD UNIT"
+   
+   → KOPIRAJ "Ad unit ID" (izgleda: ca-app-pub-XXXX/YYYY)
+
+7. Dodaj APP ID:
+   ──────────────
+   - Idi na "App settings"
+   - Kopiraj "App ID" (izgleda: ca-app-pub-XXXX~YYYY)
+
+=================================================================
+
+SADA IMAŠ 3 ID-A:
+✓ Banner Ad Unit ID:       ca-app-pub-XXXX/YYYY
+✓ Interstitial Ad Unit ID: ca-app-pub-XXXX/ZZZZ
+✓ AdMob App ID:            ca-app-pub-XXXX~WWWW
+
+Zadrži ih negde - trebaju nam za sledeći korak!
+
+=================================================================

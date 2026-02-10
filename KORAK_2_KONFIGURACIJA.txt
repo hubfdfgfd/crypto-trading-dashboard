@@ -1,0 +1,53 @@
+=================================================================
+  KORAK 2 - KONFIGURISANJE APLIKACIJE
+=================================================================
+
+Sada trebamo 3 ID-a koja si dobio staviti u aplikaciju.
+
+OTVORI FAJLOVE I ZAMENI:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAJL 1: App.js (red ~24-25)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Zatrazi:
+  ADMOB_BANNER_ID: 'ca-app-pub-3940256099942544/6300978111',
+  ADMOB_INTERSTITIAL_ID: 'ca-app-pub-3940256099942544/1033173712',
+
+Zameni sa tvojim ID-evima:
+  ADMOB_BANNER_ID: 'TVOJ_BANNER_ID_OVDE',
+  ADMOB_INTERSTITIAL_ID: 'TVOJ_INTERSTITIAL_ID_OVDE',
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAJL 2: app.json (red ~26)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Zatrazi:
+  "googleMobileAdsAppId": "ca-app-pub-XXXXX~XXXXX"
+
+Zameni sa tvojim APP ID:
+  "googleMobileAdsAppId": "TVOJ_APP_ID_OVDE"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DODATNO - Backend URL (ako hoćeš da app radi sa pravim podacima):
+
+FAJL: App.js (red ~21)
+
+Zatrazi:
+  API_URL: 'http://127.0.0.1:5000/indicators',
+
+Ako znaš IP adresu svog računara (koristi "ipconfig" u cmd):
+  API_URL: 'http://TVOJA_IP_ADRESA:5000/indicators',
+
+(Za sada možeš ostaviti 127.0.0.1 - radiće dummy podaci)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+=================================================================
+
+JAVI MI KADA ZAMENIŠ TA 3 ID-A!
+
+Ili mi prosleđi te ID-eve da ja odmah zamenim umesto tebe!
+
+=================================================================

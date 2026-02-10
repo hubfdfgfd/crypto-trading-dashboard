@@ -1,0 +1,17 @@
+# Crypto Trading Dashboard
+
+## Kratak opis:
+Crypto Trading Dashboard je aplikacija koja omogućava praćenje kriptovalutnih tržišta u realnom vremenu. Pratite trendove, analizirajte podatke i donositi bolje odluke o trgovanju.
+
+## Ključne funkcionalnosti:
+- Prikaz cijena kriptovaluta u realnom vremenu.
+- Grafički prikaz trendova i indikatora.
+- Jednostavno i intuitivno korisničko sučelje.
+- Integracija s AdMob za podršku aplikaciji.
+
+## Zašto odabrati Crypto Trading Dashboard?
+- Brzi i točni podaci.
+- Prilagođeno i početnicima i iskusnim trgovcima.
+- Potpuno besplatno za korištenje.
+
+Preuzmite aplikaciju sada i unaprijedite svoje trgovanje kriptovalutama!

@@ -1,0 +1,53 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Build Android APK with EAS
+        run: eas build --platform android --non-interactive
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+          EAS_NO_VCS: 1
+
+      - name: Download APK
+        run: |
+          mkdir -p ./apk-artifacts
+          echo "Build completed! Check EAS Build status at: https://expo.dev/accounts/buzer88/builds"
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: ./apk-artifacts/
+          if-no-files-found: warn
+
+      - name: Build Status
+        if: always()
+        run: echo "✅ Android build process initiated via EAS Build"

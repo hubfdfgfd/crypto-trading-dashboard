@@ -1,0 +1,315 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║         📱 CRYPTO TRADING DASHBOARD - PLAY STORE APP           ║
+║                  KOMPLETNO REŠENJE ZA ZARADU                   ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────┐
+│  💰 POTENCIJAL ZARADE                                          │
+└────────────────────────────────────────────────────────────────┘
+
+  1,000 korisnika/mesec:    $225 - $375
+  10,000 korisnika/mesec:   $2,250 - $3,250
+  100,000 korisnika/mesec:  $22,500 - $32,500+
+
+  Izvori prihoda:
+  ✅ AdMob Banner oglasi
+  ✅ AdMob Interstitial oglasi  
+  ✅ Premium verzija ($4.99)
+
+┌────────────────────────────────────────────────────────────────┐
+│  📁 ŠTA SI DOBIO                                               │
+└────────────────────────────────────────────────────────────────┘
+
+  play_store_app/
+  │
+  ├── 📱 APLIKACIJA
+  │   ├── App.js                    → Glavni kod aplikacije
+  │   ├── package.json              → Dependencies
+  │   ├── app.json                  → Expo konfiguracija
+  │   └── eas.json                  → Build konfiguracija
+  │
+  ├── 🚀 BUILD SKRIPTE
+  │   ├── INSTALL.bat               → Instalacija (jednom)
+  │   ├── BUILD_APK.bat             → Test APK build
+  │   └── BUILD_AAB.bat             → Production AAB build
+  │
+  ├── 📚 DOKUMENTACIJA
+  │   ├── QUICK_START.txt           → Brzi start (ČITAJ PRVO!)
+  │   ├── README.md                 → Kompletna dokumentacija
+  │   ├── GOOGLE_PLAY_VODIC.md      → Play Store proces
+  │   └── STORE_LISTING_TEMPLATES.md → Copy-paste tekstovi
+  │
+  └── 🎨 ASSETS
+      └── assets/README.md          → Uputstvo za ikone
+
+┌────────────────────────────────────────────────────────────────┐
+│  🎯 FEATURES APLIKACIJE                                        │
+└────────────────────────────────────────────────────────────────┘
+
+  ✅ Real-time crypto indicators
+     • RSI (Relative Strength Index)
+     • MACD (Moving Average Convergence Divergence)
+     • Williams %R
+     • Bollinger Bands
+
+  ✅ Live charts sa Plotly
+  ✅ BUY/SELL/NEUTRAL signali
+  ✅ Auto-refresh (30s)
+  ✅ Pull-to-refresh
+  ✅ Dark theme optimizovan
+  ✅ Professional UI/UX
+
+  💰 MONETIZACIJA:
+  ✅ AdMob banner ads (bottom)
+  ✅ AdMob interstitial ads (every 5 refreshes)
+  ✅ In-App Purchase - Premium ($4.99)
+     • No ads
+     • Unlimited notifications
+     • Advanced strategies
+     • Priority support
+
+┌────────────────────────────────────────────────────────────────┐
+│  ⚡ BRZI START (3 KORAKA)                                      │
+└────────────────────────────────────────────────────────────────┘
+
+  KORAK 1: Registracije (~30 min)
+  ────────────────────────────────
+  1. Google Play Developer → https://play.google.com/console
+     Cena: $25 (jednokratno, doživotno)
+
+  2. Google AdMob → https://admob.google.com (BESPLATNO)
+     • Kreiraj aplikaciju
+     • Kreiraj "Banner Ad Unit" → kopiraj ID
+     • Kreiraj "Interstitial Ad Unit" → kopiraj ID
+     • Zameni u App.js (red 24-25)
+
+  KORAK 2: Build & Test (~30 min)
+  ────────────────────────────────
+  1. Dupli klik: INSTALL.bat
+  2. Dupli klik: BUILD_APK.bat
+  3. Sačekaj 15-20 min (cloud build)
+  4. Download APK i testiraj na telefonu
+
+  KORAK 3: Play Store Upload (~1h)
+  ─────────────────────────────────
+  1. Dupli klik: BUILD_AAB.bat
+  2. Download AAB fajl
+  3. Google Play Console → Create New App
+  4. Upload AAB + Screenshots + Description
+  5. Submit for review!
+  6. Čekaj 1-7 dana (prosek 2-3 dana)
+  7. OBJAVLJENO! 🎉
+
+┌────────────────────────────────────────────────────────────────┐
+│  🔧 KONFIGURACIJA (PRE BUILD-a)                                │
+└────────────────────────────────────────────────────────────────┘
+
+  1. Backend URL (App.js, red ~21):
+     ────────────────────────────────
+     API_URL: 'http://192.168.1.100:5000/indicators'
+                      ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+                      Tvoja IP adresa
+
+  2. AdMob IDs (App.js, red ~24-25):
+     ────────────────────────────────
+     ADMOB_BANNER_ID: 'ca-app-pub-XXXX/YYYY'
+     ADMOB_INTERSTITIAL_ID: 'ca-app-pub-XXXX/ZZZZ'
+                              ↑↑↑↑↑↑↑↑↑↑↑↑
+                              Iz AdMob console
+
+  3. Package Name (app.json, red ~21):
+     ────────────────────────────────
+     "package": "com.yourcompany.cryptodashboard"
+                     ↑↑↑↑↑↑↑↑↑↑↑
+                     Tvoje ime (lowercase, no spaces)
+
+  4. AdMob App ID (app.json, red ~26):
+     ────────────────────────────────
+     "googleMobileAdsAppId": "ca-app-pub-XXXX~YYYY"
+                              ↑↑↑↑↑↑↑↑↑↑↑↑
+                              Iz AdMob console
+
+┌────────────────────────────────────────────────────────────────┐
+│  📋 CHECKLIST PRE OBJAVE                                       │
+└────────────────────────────────────────────────────────────────┘
+
+  TEHNIČKI:
+  [ ] Node.js instaliran
+  [ ] Expo nalog kreiran
+  [ ] AdMob nalog + Ad Unit IDs konfigurisani
+  [ ] Backend server IP adresa u App.js
+  [ ] Package name promenjen u app.json
+  [ ] APK testiran na telefonu
+  [ ] Sve funkcionality radi
+
+  PLAY STORE:
+  [ ] Google Play Developer nalog plaćen ($25)
+  [ ] Privacy Policy hosted online (besplatno)
+       → https://www.freeprivacypolicy.com
+  [ ] 2-8 screenshots napravljeni
+  [ ] App icon 512x512 px (PNG)
+       → https://www.canva.com
+  [ ] Feature graphic 1024x500 px
+  [ ] Store description napisan
+       → STORE_LISTING_TEMPLATES.md (copy-paste)
+  [ ] Content rating popunjen
+  [ ] AAB fajl build-ovan
+
+┌────────────────────────────────────────────────────────────────┐
+│  💡 MARKETING & GROWTH STRATEGIJE                              │
+└────────────────────────────────────────────────────────────────┘
+
+  ORGANIC (besplatno):
+  ✓ App Store Optimization (ASO)
+    • Keywords: crypto, trading, bitcoin, RSI, MACD
+    • High-quality screenshots
+    • Professional description (template included!)
+  
+  ✓ Social Media
+    • Reddit: r/cryptocurrency, r/cryptotrading
+    • Twitter: #crypto #bitcoin #trading
+    • YouTube: Tutorial video "How to use..."
+    • TikTok: Short demo clips
+
+  ✓ Content Marketing
+    • Blog posts o crypto trading
+    • Email newsletter sa signalima
+    • Telegram/Discord grupa
+
+  PAID (sa budžetom):
+  💰 Google Ads: $500-1000 initial budget
+     • Target: "crypto trading app"
+     • CPI (Cost Per Install): $1-3
+     • 500 installs → $175 premium revenue (break-even)
+
+┌────────────────────────────────────────────────────────────────┐
+│  📊 ANALYTICS & TRACKING                                       │
+└────────────────────────────────────────────────────────────────┘
+
+  Monitor ove metrike (Play Console Dashboard):
+
+  📈 User Metrics:
+     • Installations (daily/monthly)
+     • Active Users (DAU/MAU)
+     • Retention (Day 1, 7, 30)
+     • Uninstall rate
+
+  💰 Revenue Metrics:
+     • Ad impressions (AdMob)
+     • eCPM (earnings per 1000 impressions)
+     • Premium conversion rate
+     • ARPU (Average Revenue Per User)
+
+  🎯 Engagement:
+     • Session length
+     • Refresh count per session
+     • Feature usage
+     • Crash rate (keep below 1%)
+
+┌────────────────────────────────────────────────────────────────┐
+│  ⚠️ VAŽNE NAPOMENE                                             │
+└────────────────────────────────────────────────────────────────┘
+
+  PRAVNE:
+  ⚖️ Disclaimer MORA biti u app i store listing:
+     "This app provides technical analysis for educational purposes.
+      All trading decisions are your responsibility."
+
+  🔒 GDPR compliance (EU users):
+     • Privacy policy obavezna
+     • Opt-out iz personalized ads
+     • Data collection disclosure
+
+  💳 Taxes:
+     • Google uzima 30% od in-app purchases
+     • AdMob income je tvoj prihod (prijavi poreske)
+     • Konsultuj računovođu
+
+  📝 Play Store Policies:
+     • Pročitaj: https://play.google.com/about/developer-content-policy/
+     • Zabranjen misleading content
+     • Guarantee trading success = BAN
+     • Disclaimer obavezan
+
+┌────────────────────────────────────────────────────────────────┐
+│  🆘 SUPPORT & RESOURCES                                        │
+└────────────────────────────────────────────────────────────────┘
+
+  📚 Dokumentacija:
+     • Expo: https://docs.expo.dev
+     • EAS Build: https://docs.expo.dev/build/introduction/
+     • AdMob: https://support.google.com/admob
+     • Play Console: https://support.google.com/googleplay
+
+  💬 Community:
+     • Expo Discord: https://chat.expo.dev
+     • r/reactnative
+     • Stack Overflow
+
+  🐛 Troubleshooting:
+     Proveri README.md ili GOOGLE_PLAY_VODIC.md
+
+┌────────────────────────────────────────────────────────────────┐
+│  🎯 ROADMAP (Nakon Launch-a)                                  │
+└────────────────────────────────────────────────────────────────┘
+
+  WEEK 1-2:
+  ─────────
+  • Monitor crash reports
+  • Odgovori na reviews (build reputation!)
+  • Fix critical bugs ASAP
+  • Track first revenue
+
+  MONTH 1:
+  ────────
+  • Analyze retention data
+  • Optimize ad placement
+  • A/B test premium pricing
+  • Implement push notifications
+  • Start ASO optimization
+
+  MONTH 2-3:
+  ──────────
+  • Add new cryptocurrencies
+  • Multi-language support (2x audience)
+  • Advanced features (alerts, portfolio)
+  • Consider iOS version (double revenue)
+
+  MONTH 6:
+  ────────
+  • Evaluate monetization data
+  • Scale paid marketing if ROI positive
+  • Build community (Discord/Telegram)
+  • Partner with crypto influencers
+
+┌────────────────────────────────────────────────────────────────┐
+│  🚀 READY TO LAUNCH?                                           │
+└────────────────────────────────────────────────────────────────┘
+
+  Otvori terminal i startuj:
+
+  cd "f:\Ollama\CURSOR\NOVO\play_store_app"
+
+  INSTALL.bat       → Instalacija (jednom)
+  BUILD_APK.bat     → Test build
+  BUILD_AAB.bat     → Production build
+
+  Zatim idi na:
+  → https://play.google.com/console
+
+  I POCNI DA ZARADJUJES! 💸🚀
+
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║   PITANJA? Čitaj:                                              ║
+║                                                                ║
+║   • QUICK_START.txt → Brz pregled                              ║
+║   • README.md → Detaljna dokumentacija                         ║
+║   • GOOGLE_PLAY_VODIC.md → Play Store proces                   ║
+║   • STORE_LISTING_TEMPLATES.md → Copy-paste tekstovi           ║
+║                                                                ║
+║   SREĆNO! 🍀                                                   ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
