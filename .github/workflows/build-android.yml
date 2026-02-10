@@ -20,17 +20,35 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Setup EAS CLI
-        run: npm install -g eas-cli
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          api-levels: 34
+          build-tools: 34.0.0
 
-      - name: Build Android APK with EAS
-        run: |
-          eas build --platform android --profile github-actions --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
+      - name: Prebuild native Android project
+        run: npx expo prebuild --platform android --clean
+
+      - name: Build APK with Gradle
+        working-directory: ./android
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: android-apk
+          path: ./android/app/build/outputs/apk/debug/*.apk
 
       - name: Build Complete
-        run: echo "✅ Android APK build completed! Check https://expo.dev/accounts/buzer88/builds"
+        if: success()
+        run: echo "✅ APK built successfully!"
