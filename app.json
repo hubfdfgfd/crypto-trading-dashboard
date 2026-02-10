@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
     "updates": {
       "enabled": false
     },
@@ -22,6 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#1a1a2e"
       },
       "package": "com.buzer88.cryptodashboard",
@@ -30,9 +32,6 @@
         "INTERNET",
         "ACCESS_NETWORK_STATE"
       ],
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-XXXX~YYYY"
-      },
       "allowBackup": false,
       "usesCleartextTraffic": true
     },
@@ -40,9 +39,6 @@
       "eas": {
         "projectId": "131148a2-1b46-4a72-9c01-9b3f192ad24b"
       }
-    },
-    "cli": {
-      "appVersionSource": "remote"
     }
   }
 }
