@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -25,29 +21,18 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Setup EAS CLI
         run: npm install -g eas-cli
 
       - name: Build Android APK with EAS
-        run: eas build --platform android --non-interactive
+        run: eas build --platform android --non-interactive --wait
         env:
           EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
-          EAS_NO_VCS: 1
 
-      - name: Download APK
+      - name: Print Build Status
         run: |
-          mkdir -p ./apk-artifacts
-          echo "Build completed! Check EAS Build status at: https://expo.dev/accounts/buzer88/builds"
-
-      - name: Upload APK as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk
-          path: ./apk-artifacts/
-          if-no-files-found: warn
-
-      - name: Build Status
-        if: always()
-        run: echo "✅ Android build process initiated via EAS Build"
+          echo "✅ Build process completed!"
+          echo "📱 Check your APK at: https://expo.dev/accounts/buzer88/builds"
+          echo "🎯 You can download it from EAS Dashboard"
