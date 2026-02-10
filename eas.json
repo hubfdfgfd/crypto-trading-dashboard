@@ -15,7 +15,13 @@
     },
     "production": {
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "apk"
+      }
+    },
+    "github-actions": {
+      "android": {
+        "buildType": "apk",
+        "distribution": "internal"
       }
     }
   },
