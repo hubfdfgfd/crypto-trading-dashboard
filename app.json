@@ -28,7 +28,8 @@
       "versionCode": 1,
       "permissions": [
         "INTERNET",
-        "ACCESS_NETWORK_STATE"
+        "ACCESS_NETWORK_STATE",
+        "com.android.vending.BILLING"
       ],
       "allowBackup": false
     },
