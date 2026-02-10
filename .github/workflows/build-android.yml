@@ -30,7 +30,7 @@ jobs:
         run: |
           eas build --platform android --non-interactive
         env:
-          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
 
       - name: Build Complete
         run: echo "✅ Android APK build completed! Check https://expo.dev/accounts/buzer88/builds"
