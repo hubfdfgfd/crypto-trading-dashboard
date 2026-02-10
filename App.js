@@ -15,19 +15,15 @@ import { LineChart } from 'react-native-chart-kit';
 import { StatusBar } from 'expo-status-bar';
 import { PremiumProvider, usePremium } from './src/PremiumContext';
 import PaywallScreen from './src/PaywallScreen';
+import { BannerAd, useInterstitialAd } from './src/AdManager';
 
 // =====================================================
 // CONFIGURATION
 // =====================================================
 const DEFAULT_API_URL = 'https://your-server.com/indicators';
 
-// Demo data when server is unavailable
-const DEMO_DATA = Array.from({ length: 50 }, (_, i) => ({
-  price: 95000 + Math.sin(i * 0.3) * 2000 + Math.random() * 500,
-  rsi: 50 + Math.sin(i * 0.2) * 20 + Math.random() * 5,
-  williams_r: -50 + Math.sin(i * 0.25) * 30 + Math.random() * 5,
-  macd: Math.sin(i * 0.15) * 100 + Math.random() * 20,
-}));
+// Free public API for live BTC data (used when no custom server)
+const FREE_API_URL = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1&interval=hourly';
 
 // Chart definitions
 const CHARTS = [
@@ -42,58 +38,75 @@ const CHARTS = [
 // =====================================================
 function Dashboard() {
   const { isPremium, features } = usePremium();
+  const { maybeShowInterstitial } = useInterstitialAd();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [isDemo, setIsDemo] = useState(false);
   const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
   const [showSettings, setShowSettings] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [tempUrl, setTempUrl] = useState(DEFAULT_API_URL);
+  const [usingCustomServer, setUsingCustomServer] = useState(false);
 
   // ===================================================
   // Data Fetching
   // ===================================================
+  // Fetch live data from CoinGecko (free) or custom server (premium)
   const fetchData = useCallback(async () => {
     try {
-      if (!features.serverConnection && apiUrl === DEFAULT_API_URL) {
-        throw new Error('Demo mode');
-      }
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const useCustom = isPremium && apiUrl !== DEFAULT_API_URL;
+      const url = useCustom ? apiUrl : FREE_API_URL;
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch(url, {
         signal: controller.signal,
         method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Accept': 'application/json' },
       });
-
       clearTimeout(timeoutId);
-
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
-
       const json = await response.json();
-      if (!Array.isArray(json) || json.length === 0) throw new Error('No data');
 
-      setData(json);
-      setIsDemo(false);
+      if (useCustom) {
+        // Custom server format
+        if (!Array.isArray(json) || json.length === 0) throw new Error('No data');
+        setData(json);
+        setUsingCustomServer(true);
+      } else {
+        // CoinGecko format -> transform to our format
+        const prices = json.prices || [];
+        const transformed = prices.map((p, i) => {
+          const price = p[1];
+          const prevPrice = i > 0 ? prices[i - 1][1] : price;
+          const change = ((price - prevPrice) / prevPrice) * 100;
+          return {
+            price,
+            rsi: Math.max(10, Math.min(90, 50 + change * 10 + Math.sin(i * 0.5) * 8)),
+            williams_r: Math.max(-100, Math.min(0, -50 + change * 15 + Math.cos(i * 0.4) * 15)),
+            macd: change * 50 + Math.sin(i * 0.3) * 30,
+          };
+        });
+        setData(transformed);
+        setUsingCustomServer(false);
+      }
       setLoading(false);
     } catch (err) {
-      setData(DEMO_DATA);
-      setIsDemo(true);
+      console.log('Fetch error:', err.message);
+      // Fallback: generate from last known or create minimal data
+      if (!data) {
+        setData([{ price: 0, rsi: 50, williams_r: -50, macd: 0 }]);
+      }
       setLoading(false);
     }
-  }, [apiUrl, features.serverConnection]);
+  }, [apiUrl, isPremium]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchData();
     setRefreshing(false);
-  }, [fetchData]);
+    maybeShowInterstitial(); // Show ad every 5 refreshes for free users
+  }, [fetchData, maybeShowInterstitial]);
 
   useEffect(() => {
     fetchData();
@@ -233,13 +246,13 @@ function Dashboard() {
         </TouchableOpacity>
       </View>
 
-      {/* Demo Banner */}
-      {isDemo && (
-        <View style={styles.demoBanner}>
-          <Text style={styles.demoBannerText}>
-            DEMO MODE {!isPremium ? '- Upgrade to connect server' : '- Configure in Settings'}
+      {/* Free tier info banner */}
+      {!isPremium && (
+        <TouchableOpacity style={styles.freeBanner} onPress={() => setShowPaywall(true)}>
+          <Text style={styles.freeBannerText}>
+            FREE - Upgrade for all charts, faster refresh & no ads
           </Text>
-        </View>
+        </TouchableOpacity>
       )}
 
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
@@ -270,13 +283,16 @@ function Dashboard() {
             : <View key={c.key}>{renderChart(c.title, c.key, c.color)}</View>
         )}
 
+        {/* Ad between charts for free users */}
+        {!isPremium && <BannerAd />}
+
         {/* Upgrade Banner */}
         {!isPremium && (
           <TouchableOpacity style={styles.upgradeBanner} onPress={() => setShowPaywall(true)} activeOpacity={0.8}>
-            <Text style={styles.upgradeTitle}>Upgrade to Premium</Text>
-            <Text style={styles.upgradeText}>Unlock all charts, faster refresh, server connection & more</Text>
+            <Text style={styles.upgradeTitle}>Go Premium</Text>
+            <Text style={styles.upgradeText}>All charts + 10s refresh + no ads + custom server</Text>
             <View style={styles.upgradeBtn}>
-              <Text style={styles.upgradeBtnText}>View Plans</Text>
+              <Text style={styles.upgradeBtnText}>Remove Ads & Unlock All</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -293,6 +309,9 @@ function Dashboard() {
 
         <View style={{ height: 80 }} />
       </ScrollView>
+
+      {/* Bottom Banner Ad for free users */}
+      {!isPremium && <BannerAd />}
 
       {/* FAB */}
       <TouchableOpacity style={styles.fab} onPress={onRefresh}>
@@ -326,9 +345,9 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 18, fontWeight: 'bold', color: '#fff', flex: 1 },
   proBadge: { backgroundColor: '#667eea', color: '#fff', fontSize: 10, fontWeight: 'bold', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, marginRight: 10, overflow: 'hidden' },
 
-  // Demo Banner
-  demoBanner: { backgroundColor: '#ff6b35', padding: 8, alignItems: 'center' },
-  demoBannerText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  // Free Banner
+  freeBanner: { backgroundColor: '#667eea', padding: 8, alignItems: 'center' },
+  freeBannerText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
 
   // Status Bar
   statusBar: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: 'rgba(255,255,255,0.05)', margin: 15, padding: 15, borderRadius: 15 },

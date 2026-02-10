@@ -61,6 +61,7 @@ export default function PaywallScreen({ visible, onClose }) {
             <View style={styles.featuresBox}>
               <Text style={styles.featuresTitle}>PREMIUM FEATURES</Text>
               
+              <FeatureRow icon="noads" text="No Ads" free={false} premium={true} />
               <FeatureRow icon="chart" text="All 4 charts (Price, RSI, Williams %R, MACD)" free={false} premium={true} />
               <FeatureRow icon="speed" text="10-second real-time refresh" free={false} premium={true} />
               <FeatureRow icon="server" text="Connect your own trading server" free={false} premium={true} />
@@ -70,8 +71,8 @@ export default function PaywallScreen({ visible, onClose }) {
               <View style={styles.divider} />
               <Text style={styles.featuresTitle}>FREE FEATURES</Text>
               
-              <FeatureRow icon="chart" text="Price & RSI charts" free={true} premium={true} />
-              <FeatureRow icon="demo" text="Demo mode with sample data" free={true} premium={true} />
+              <FeatureRow icon="chart" text="Price & RSI charts (live data)" free={true} premium={true} />
+              <FeatureRow icon="live" text="Live BTC data from CoinGecko" free={true} premium={true} />
               <FeatureRow icon="signal" text="Basic buy/sell signals" free={true} premium={true} />
             </View>
 

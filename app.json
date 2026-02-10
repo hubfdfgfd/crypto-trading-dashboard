@@ -33,6 +33,14 @@
       ],
       "allowBackup": false
     },
+    "plugins": [
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-6221937757841885~7738819676"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "131148a2-1b46-4a72-9c01-9b3f192ad24b"

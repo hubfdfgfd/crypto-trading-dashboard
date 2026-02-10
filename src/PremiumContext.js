@@ -21,18 +21,20 @@ export const PRODUCTS = {
 // =====================================================
 export const FEATURES = {
   FREE: {
-    charts: ['price', 'rsi'],
-    refreshInterval: 60000,   // 60 seconds
-    serverConnection: false,
-    alerts: false,
-    maxDataPoints: 10,
+    charts: ['price', 'rsi'],        // 2 charts only
+    refreshInterval: 60000,           // 60 seconds
+    serverConnection: false,          // No custom server
+    alerts: false,                    // No alerts
+    maxDataPoints: 15,                // Limited data points
+    ads: true,                        // Shows ads
   },
   PREMIUM: {
-    charts: ['price', 'rsi', 'williams_r', 'macd'],
-    refreshInterval: 10000,   // 10 seconds
-    serverConnection: true,
-    alerts: true,
-    maxDataPoints: 50,
+    charts: ['price', 'rsi', 'williams_r', 'macd'],  // All 4 charts
+    refreshInterval: 10000,           // 10 seconds
+    serverConnection: true,           // Custom server
+    alerts: true,                     // Buy/sell alerts
+    maxDataPoints: 50,                // Full data
+    ads: false,                       // No ads
   },
 };
 
