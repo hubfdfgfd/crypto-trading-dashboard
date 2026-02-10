@@ -6,7 +6,7 @@ import { Platform, Alert } from 'react-native';
 // =====================================================
 // Replace with your RevenueCat API key from https://app.revenuecat.com
 const REVENUECAT_API_KEY = Platform.select({
-  android: 'YOUR_REVENUECAT_GOOGLE_API_KEY',
+  android: 'test_fcxCeIBNSMuZBotBaYMSpmbLdbL',
   ios: 'YOUR_REVENUECAT_APPLE_API_KEY',
 });
 
