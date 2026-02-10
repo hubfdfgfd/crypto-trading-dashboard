@@ -1,14 +1,23 @@
-name: Build Android APK
+name: Build & Deploy
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Build profile'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
 
 jobs:
   build:
-    name: Build Android APK with EAS
+    name: Build Android
     runs-on: ubuntu-latest
 
     steps:
@@ -30,11 +39,21 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build Android APK with EAS
+      - name: Build Android (Preview APK)
+        if: github.event.inputs.profile != 'production'
         run: eas build --platform android --profile preview --non-interactive
 
-      - name: Download APK
-        if: success()
+      - name: Build Android (Production AAB)
+        if: github.event.inputs.profile == 'production'
+        run: eas build --platform android --profile production --non-interactive
+
+      - name: Submit to Google Play
+        if: github.event.inputs.profile == 'production' && success()
+        run: eas submit --platform android --profile production --non-interactive
+        continue-on-error: true
+
+      - name: Build Status
+        if: always()
         run: |
-          echo "✅ Build completed! Check EAS dashboard for APK download."
-          echo "https://expo.dev/accounts/buzer88/projects/crypto-trading-dashboard/builds"
+          echo "Build profile: ${{ github.event.inputs.profile || 'preview' }}"
+          echo "Check builds: https://expo.dev/accounts/buzer88/projects/crypto-trading-dashboard/builds"

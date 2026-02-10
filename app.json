@@ -5,25 +5,23 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
+    "scheme": "cryptodashboard",
     "icon": "./assets/icon.png",
     "updates": {
       "enabled": false
     },
     "splash": {
+      "image": "./assets/splash.png",
       "backgroundColor": "#1a1a2e",
       "resizeMode": "contain"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
-    "platforms": ["ios", "android"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.buzer88.cryptodashboard"
-    },
+    "platforms": ["android"],
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1a1a2e"
       },
       "package": "com.buzer88.cryptodashboard",
@@ -32,8 +30,7 @@
         "INTERNET",
         "ACCESS_NETWORK_STATE"
       ],
-      "allowBackup": false,
-      "usesCleartextTraffic": true
+      "allowBackup": false
     },
     "extra": {
       "eas": {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,9 +6,11 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
-  Alert,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput,
+  Modal,
+  Platform
 } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { StatusBar } from 'expo-status-bar';
@@ -16,13 +18,15 @@ import { StatusBar } from 'expo-status-bar';
 // =====================================================
 // KONFIGURACIJA
 // =====================================================
-const CONFIG = {
-  // Backend API URL - zameni sa svojom IP adresom
-  API_URL: 'http://192.168.1.230:5000/indicators',
-  
-  // Auto-refresh interval (ms)
-  AUTO_REFRESH_INTERVAL: 30000 // 30 sekundi
-};
+const DEFAULT_API_URL = 'https://your-server.com/indicators';
+
+// Demo podaci za prikaz kada server nije dostupan
+const DEMO_DATA = Array.from({ length: 30 }, (_, i) => ({
+  price: 95000 + Math.sin(i * 0.3) * 2000 + Math.random() * 500,
+  rsi: 50 + Math.sin(i * 0.2) * 20 + Math.random() * 5,
+  williams_r: -50 + Math.sin(i * 0.25) * 30 + Math.random() * 5,
+  macd: Math.sin(i * 0.15) * 100 + Math.random() * 20,
+}));
 
 // =====================================================
 // MAIN APP COMPONENT
@@ -32,19 +36,22 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
+  const [isDemo, setIsDemo] = useState(false);
+  const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
+  const [showSettings, setShowSettings] = useState(false);
+  const [tempUrl, setTempUrl] = useState(DEFAULT_API_URL);
 
   // ===================================================
   // Data Fetching
   // ===================================================
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setError(null);
       
-      // Create an abort controller for timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       
-      const response = await fetch(CONFIG.API_URL, {
+      const response = await fetch(apiUrl, {
         signal: controller.signal,
         method: 'GET',
         headers: {
@@ -66,37 +73,29 @@ export default function App() {
       }
       
       setData(json);
+      setIsDemo(false);
       setLoading(false);
       setError(null);
     } catch (err) {
-      console.error('Fetch error:', err);
-      
-      // User-friendly error messages
-      let errorMsg = 'Greška pri učitavanju podataka';
-      if (err.name === 'AbortError') {
-        errorMsg = 'Timeout: Server ne odgovara (10s)';
-      } else if (err.message.includes('Network')) {
-        errorMsg = 'Mrežna greška: Proverite konekciju';
-      } else if (err.message.includes('Server error')) {
-        errorMsg = err.message;
-      }
-      
-      setError(errorMsg);
+      console.log('Using demo data - server unavailable');
+      setData(DEMO_DATA);
+      setIsDemo(true);
       setLoading(false);
+      setError(null);
     }
-  };
+  }, [apiUrl]);
 
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchData();
     setRefreshing(false);
-  };
+  }, [fetchData]);
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, CONFIG.AUTO_REFRESH_INTERVAL);
+    const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchData]);
 
   // ===================================================
   // Render Helpers
@@ -162,18 +161,7 @@ export default function App() {
     return (
       <View style={styles.centerContainer}>
         <ActivityIndicator size="large" color="#667eea" />
-        <Text style={styles.loadingText}>Učitavam podatke...</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.errorText}>⚠️ {error}</Text>
-        <TouchableOpacity style={styles.retryButton} onPress={fetchData}>
-          <Text style={styles.retryButtonText}>Pokušaj ponovo</Text>
-        </TouchableOpacity>
+        <Text style={styles.loadingText}>Loading data...</Text>
       </View>
     );
   }
@@ -187,10 +175,64 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="light" />
       
+      {/* Settings Modal */}
+      <Modal
+        visible={showSettings}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowSettings(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Settings</Text>
+            <Text style={styles.modalLabel}>API Server URL:</Text>
+            <TextInput
+              style={styles.modalInput}
+              value={tempUrl}
+              onChangeText={setTempUrl}
+              placeholder="https://your-server.com/indicators"
+              placeholderTextColor="#666"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.modalButtonCancel]}
+                onPress={() => setShowSettings(false)}
+              >
+                <Text style={styles.modalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.modalButtonSave]}
+                onPress={() => {
+                  setApiUrl(tempUrl);
+                  setShowSettings(false);
+                  setLoading(true);
+                }}
+              >
+                <Text style={styles.modalButtonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>📊 Crypto Trading Dashboard</Text>
+        <Text style={styles.headerTitle}>Crypto Trading Dashboard</Text>
+        <TouchableOpacity onPress={() => { setTempUrl(apiUrl); setShowSettings(true); }}>
+          <Text style={styles.settingsIcon}>⚙️</Text>
+        </TouchableOpacity>
       </View>
+
+      {/* Demo Mode Banner */}
+      {isDemo && (
+        <View style={styles.demoBanner}>
+          <Text style={styles.demoBannerText}>
+            DEMO MODE - Tap ⚙️ to connect your server
+          </Text>
+        </View>
+      )}
 
       <ScrollView
         refreshControl={
@@ -216,17 +258,17 @@ export default function App() {
         </View>
 
         {/* Charts */}
-        {renderChart('💰 Price & BB', 'price', '#4ecdc4')}
-        {renderChart('📈 RSI', 'rsi', '#95e1d3')}
-        {renderChart('📉 Williams %R', 'williams_r', '#ffd93d')}
-        {renderChart('🔄 MACD', 'macd', '#667eea')}
+        {renderChart('Price & BB', 'price', '#4ecdc4')}
+        {renderChart('RSI', 'rsi', '#95e1d3')}
+        {renderChart('Williams %R', 'williams_r', '#ffd93d')}
+        {renderChart('MACD', 'macd', '#667eea')}
 
         {/* Info Message */}
         <View style={styles.infoContainer}>
-          <Text style={styles.infoTitle}>💡 Free Version</Text>
+          <Text style={styles.infoTitle}>Free Version</Text>
           <Text style={styles.infoText}>
-            Uživaj u svim funkcijama potpuno besplatno!{'\n'}
-            Premium features coming soon.
+            Enjoy all features completely free!{'\n'}
+            Connect your own trading server via Settings.
           </Text>
         </View>
 
@@ -268,8 +310,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#fff',
-    textAlign: 'center',
     flex: 1,
+  },
+  settingsIcon: {
+    fontSize: 22,
+    padding: 5,
+  },
+  demoBanner: {
+    backgroundColor: '#ff6b35',
+    padding: 8,
+    alignItems: 'center',
+  },
+  demoBannerText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   statusBar: {
     flexDirection: 'row',
@@ -369,5 +424,62 @@ const styles = StyleSheet.create({
   },
   fabText: {
     fontSize: 24,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#1a1a2e',
+    borderRadius: 20,
+    padding: 25,
+    width: '85%',
+    borderWidth: 1,
+    borderColor: '#667eea',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalLabel: {
+    color: '#aaa',
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  modalInput: {
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 10,
+    padding: 12,
+    color: '#fff',
+    fontSize: 14,
+    borderWidth: 1,
+    borderColor: '#333',
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modalButton: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  modalButtonCancel: {
+    backgroundColor: '#333',
+  },
+  modalButtonSave: {
+    backgroundColor: '#667eea',
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });

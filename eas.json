@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 5.2.0"
+    "version": ">= 5.2.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -15,13 +16,7 @@
     },
     "production": {
       "android": {
-        "buildType": "apk"
-      }
-    },
-    "github-actions": {
-      "android": {
-        "buildType": "apk",
-        "distribution": "internal"
+        "buildType": "app-bundle"
       }
     }
   },
